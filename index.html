@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 YanzXD | Decoder Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="bg-animation">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>Decoder Tools <span class="pro-badge">PRO</span></h1>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline" onclick="toggleTheme()">
+                        <i class="fas fa-palette"></i>
+                        Theme
+                    </button>
+                    <button class="btn btn-outline" onclick="showAbout()">
+                        <i class="fas fa-info-circle"></i>
+                        About
+                    </button>
+                    <button class="btn btn-outline" onclick="showSettings()">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="filesProcessed">0</span>
+                        <span class="stat-label">Files Processed</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="codesFound">0</span>
+                        <span class="stat-label">Codes Found</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="avgTime">0ms</span>
+                        <span class="stat-label">Avg. Time</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalSize">0</span>
+                        <span class="stat-label">Total Size</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="section-header">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h2>Upload Encrypted File</h2>
+                    <p>Support semua format file • Max 10MB • Drag & Drop</p>
+                </div>
+
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-file-code"></i>
+                    </div>
+                    <h3>Drop file here atau klik untuk upload</h3>
+                    <p>HTML, TXT, JS, atau format lainnya</p>
+                    <div class="upload-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Auto-detection</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Multi-format</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Secure</span>
+                    </div>
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+                </div>
+
+                <input type="file" id="fileInput" class="file-input" accept="*/*">
+
+                <div class="file-info-card" id="fileInfoCard">
+                    <div class="file-info-header">
+                        <i class="fas fa-file"></i>
+                        <h4>File Selected</h4>
+                        <button class="btn btn-sm btn-outline" onclick="clearFile()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="file-info-content">
+                        <div class="file-detail">
+                            <span>Name:</span>
+                            <span id="fileName">-</span>
+                        </div>
+                        <div class="file-detail">
+                            <span>Size:</span>
+                            <span id="fileSize">-</span>
+                        </div>
+                        <div class="file-detail">
+                            <span>Type:</span>
+                            <span id="fileType">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="file-actions">
+                    <button class="btn btn-primary" onclick="processFile()" id="processBtn">
+                        <i class="fas fa-cogs"></i>
+                        Process & Decode
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearAll()">
+                        <i class="fas fa-broom"></i>
+                        Clear All
+                    </button>
+                    <button class="btn btn-outline" onclick="loadSample()">
+                        <i class="fas fa-vial"></i>
+                        Load Sample
+                    </button>
+                    <button class="btn btn-outline" onclick="showBatchProcessing()">
+                        <i class="fas fa-layer-group"></i>
+                        Batch Process
+                    </button>
+                </div>
+
+                <!-- Quick Tools -->
+                <div class="quick-tools">
+                    <h4>Quick Tools:</h4>
+                    <div class="tool-buttons">
+                        <button class="tool-btn" onclick="pasteFromClipboard()">
+                            <i class="fas fa-paste"></i>
+                            Paste Text
+                        </button>
+                        <button class="tool-btn" onclick="takeScreenshot()">
+                            <i class="fas fa-camera"></i>
+                            Screenshot
+                        </button>
+                        <button class="tool-btn" onclick="showQRCode()">
+                            <i class="fas fa-qrcode"></i>
+                            QR Code
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="section-header">
+                    <i class="fas fa-search"></i>
+                    <h2>Decoding Results</h2>
+                    <div class="result-stats">
+                        <span id="resultStats">Ready to process</span>
+                    </div>
+                </div>
+
+                <!-- Results Tabs -->
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="preview">
+                            <i class="fas fa-eye"></i>
+                            Preview
+                        </button>
+                        <button class="tab-btn" data-tab="source">
+                            <i class="fas fa-code"></i>
+                            Source Code
+                        </button>
+                        <button class="tab-btn" data-tab="decoded">
+                            <i class="fas fa-unlock"></i>
+                            Decoded
+                        </button>
+                        <button class="tab-btn" data-tab="analysis">
+                            <i class="fas fa-chart-bar"></i>
+                            Analysis
+                        </button>
+                        <button class="tab-btn" data-tab="hex">
+                            <i class="fas fa-memory"></i>
+                            Hex View
+                        </button>
+                    </div>
+
+                    <div class="tabs-content">
+                        <!-- Preview Tab -->
+                        <div class="tab-pane active" id="previewTab">
+                            <div class="pane-header">
+                                <h4>File Preview</h4>
+                                <div>
+                                    <button class="btn btn-sm" onclick="copyContent('previewContent')">
+                                        <i class="fas fa-copy"></i>
+                                        Copy
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="searchInPreview()">
+                                        <i class="fas fa-search"></i>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-container">
+                                <pre id="previewContent" class="code-content">No file content to display</pre>
+                            </div>
+                        </div>
+
+                        <!-- Source Tab -->
+                        <div class="tab-pane" id="sourceTab">
+                            <div class="pane-header">
+                                <h4>Extracted JavaScript Code</h4>
+                                <div>
+                                    <button class="btn btn-sm" onclick="copyContent('sourceContent')">
+                                        <i class="fas fa-copy"></i>
+                                        Copy
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="viewSourceCode()">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        View Source
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="analyzeCode()">
+                                        <i class="fas fa-microscope"></i>
+                                        Analyze
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-container">
+                                <pre id="sourceContent" class="code-content">No JavaScript code extracted</pre>
+                            </div>
+                        </div>
+
+                        <!-- Decoded Tab -->
+                        <div class="tab-pane" id="decodedTab">
+                            <div class="pane-header">
+                                <h4>Decoded Content</h4>
+                                <div>
+                                    <button class="btn btn-sm" onclick="copyContent('decodedContent')">
+                                        <i class="fas fa-copy"></i>
+                                        Copy
+                                    </button>
+                                    <button class="btn btn-sm btn-success" onclick="downloadResult()">
+                                        <i class="fas fa-download"></i>
+                                        Download
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="exportAsHTML()">
+                                        <i class="fab fa-html5"></i>
+                                        Export HTML
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-container">
+                                <pre id="decodedContent" class="code-content">No decoded content available</pre>
+                            </div>
+                        </div>
+
+                        <!-- Analysis Tab -->
+                        <div class="tab-pane" id="analysisTab">
+                            <div class="analysis-grid">
+                                <div class="analysis-card">
+                                    <h5><i class="fas fa-info-circle"></i> File Information</h5>
+                                    <div class="info-list" id="fileInfoList">
+                                        <div class="info-item">
+                                            <span>Name:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Size:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Type:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Modified:</span>
+                                            <span>-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="analysis-card">
+                                    <h5><i class="fas fa-tachometer-alt"></i> Decoding Metrics</h5>
+                                    <div class="info-list" id="decodeInfoList">
+                                        <div class="info-item">
+                                            <span>Processing Time:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Content Length:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Encryption Type:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Security Level:</span>
+                                            <span>-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="analysis-card">
+                                    <h5><i class="fas fa-chart-pie"></i> Content Analysis</h5>
+                                    <div class="info-list" id="contentInfoList">
+                                        <div class="info-item">
+                                            <span>Lines of Code:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Variables Found:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Functions:</span>
+                                            <span>-</span>
+                                        </div>
+                                        <div class="info-item">
+                                            <span>Complexity:</span>
+                                            <span>-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hex View Tab -->
+                        <div class="tab-pane" id="hexTab">
+                            <div class="pane-header">
+                                <h4>Hexadecimal View</h4>
+                                <div>
+                                    <button class="btn btn-sm" onclick="copyHex()">
+                                        <i class="fas fa-copy"></i>
+                                        Copy Hex
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="toggleHexView()">
+                                        <i class="fas fa-exchange-alt"></i>
+                                        Toggle View
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="code-container">
+                                <pre id="hexContent" class="code-content hex-view">No hex data available</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="viewInNewWindow()">
+                        <i class="fas fa-external-link-alt"></i>
+                        New Window
+                    </button>
+                    <button class="action-btn" onclick="shareResult()">
+                        <i class="fas fa-share"></i>
+                        Share
+                    </button>
+                    <button class="action-btn" onclick="saveToCloud()">
+                        <i class="fas fa-cloud"></i>
+                        Save Cloud
+                    </button>
+                    <button class="action-btn" onclick="printResult()">
+                        <i class="fas fa-print"></i>
+                        Print
+                    </button>
+                    <button class="action-btn" onclick="createReport()">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF Report
+                    </button>
+                    <button class="action-btn" onclick="compareVersions()">
+                        <i class="fas fa-code-branch"></i>
+                        Compare
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <p>&copy; 2024 Decoder Tools. All rights reserved.</p>
+                    <p class="footer-version">Version 2.1.0 | Build 2024.12</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#" onclick="showViewSource()">View Source</a>
+                    <a href="#" onclick="showHelp()">Help & Docs</a>
+                    <a href="#" onclick="showSettings()">Settings</a>
+                    <a href="#" onclick="showKeyboardShortcuts()">Shortcuts</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal" id="loadingModal">
+        <div class="modal-content">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <h3>Processing File...</h3>
+                <p id="loadingMessage">Decrypting content</p>
+                <div class="loading-details">
+                    <div class="loading-step active">
+                        <i class="fas fa-file-import"></i>
+                        <span>Reading file</span>
+                    </div>
+                    <div class="loading-step">
+                        <i class="fas fa-search"></i>
+                        <span>Extracting code</span>
+                    </div>
+                    <div class="loading-step">
+                        <i class="fas fa-unlock"></i>
+                        <span>Decrypting</span>
+                    </div>
+                    <div class="loading-step">
+                        <i class="fas fa-check"></i>
+                        <span>Finalizing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>About Decoder Tools</h3>
+                <button class="close-btn" onclick="closeModal('aboutModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="about-content">
+                    <div class="app-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <p>Advanced HTML/JavaScript decoding tool with professional features for security analysis and code decryption.</p>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="fas fa-bolt"></i>
+                            <div>
+                                <strong>Fast Processing</strong>
+                                <span>Optimized decoding algorithms</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Secure</strong>
+                                <span>Local processing, no data sent to servers</span>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-mobile-alt"></i>
+                            <div>
+                                <strong>Responsive</strong>
+                                <span>Works on all devices</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="close-btn" onclick="closeModal('settingsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4>Appearance</h4>
+                    <div class="setting-item">
+                        <label>Theme</label>
+                        <select id="themeSelect" onchange="changeTheme(this.value)">
+                            <option value="dark">Dark Theme</option>
+                            <option value="light">Light Theme</option>
+                            <option value="auto">Auto (System)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Font Size</label>
+                        <select id="fontSizeSelect" onchange="changeFontSize(this.value)">
+                            <option value="small">Small</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Processing</h4>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="autoProcess" checked>
+                            Auto-process on file select
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="showHex" checked>
+                            Show hex view
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Source Modal -->
+    <div class="modal" id="viewSourceModal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>View Source Code</h3>
+                <button class="close-btn" onclick="closeModal('viewSourceModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="source-actions">
+                    <button class="btn btn-sm" onclick="copySourceCode()">
+                        <i class="fas fa-copy"></i>
+                        Copy Source
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="downloadSource()">
+                        <i class="fas fa-download"></i>
+                        Download
+                    </button>
+                </div>
+                <div class="code-container">
+                    <pre id="modalSourceContent" class="code-content">No source code available</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
